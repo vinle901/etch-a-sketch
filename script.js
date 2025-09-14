@@ -31,17 +31,24 @@ function createGrid(size) {
     currentMode = "color";
     enableDrawing(); // Attach listeners to new boxes
 }
+let hue = 0;
+function getRandomRainbowColor() {
+    hue = (hue + 10) % 360; // slowly change hue
+    const saturation = 70 + Math.random() * 10;
+    const lightness = 50 + Math.random() * 10;
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+}
 
 function enableDrawing() {
     const boxes = document.querySelectorAll(".box");
     boxes.forEach((box) => {
         box.onmousedown = () => {
             isDrawing = true;
-            box.style.backgroundColor = currentMode === "color" ? selectedColor || `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})` : "";
+            box.style.backgroundColor = currentMode === "color" ? selectedColor || getRandomRainbowColor() : "";
         };
         box.onmouseover = () => {
             if (isDrawing) {
-                box.style.backgroundColor = currentMode === "color" ? selectedColor || `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})` : "";
+                box.style.backgroundColor = currentMode === "color" ? selectedColor || getRandomRainbowColor() : "";
             }
         };
         box.onmouseup = () => {
